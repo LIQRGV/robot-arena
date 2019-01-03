@@ -8,7 +8,7 @@ class Robot:
         self.name = name
 
     # this should return object `Action`
-    def reaction(self, field, enemy_location):
+    def reaction(self, field, self_location, enemy_location):
         random_action = randint(0,2)
         random_direction = randint(0,3)
         actions = ["move", "push", "defend"]

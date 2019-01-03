@@ -31,8 +31,9 @@ class Arena:
         other_robot = next(
             robot for robot in self.robots if robot != playing_robot
         )
+        playing_robot_coordinate = self.robot_location_mapping[playing_robot]
         other_robot_coordinate = self.robot_location_mapping[other_robot]
-        action = playing_robot.reaction(self.field, other_robot_coordinate)
+        action = playing_robot.reaction(self.field, playing_robot, other_robot_coordinate)
 
         print(
             "{} {} to {}".format(
