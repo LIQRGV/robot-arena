@@ -54,6 +54,11 @@ class Arena:
         red_location = self.robot_location_mapping[red]
         blue_location = self.robot_location_mapping[blue]
         (width, height) = self.field.get_dimension()
+        layout = self.field.get_layout()
+        layout_mapping = {
+            0: "o",
+            1: "x",
+        }
         for y in range(height - 1, -1, -1):
             for x in range(0, width):
                 if red_location.x == x and red_location.y == y:
@@ -61,7 +66,7 @@ class Arena:
                 elif blue_location.x == x and blue_location.y == y:
                     print(2, end=' ')
                 else:
-                    print(0, end=' ')
+                    print(layout_mapping[layout[x][y]], end=' ')
             print()
 
 
@@ -81,7 +86,7 @@ class Arena:
             self.__penalty(robot)
             return
 
-        if self.__valid_move_location(copy_robot_location):
+        if self.__valid_move_location(robot, copy_robot_location):
             self.robot_location_mapping[robot] = copy_robot_location
         else:
             self.__penalty(robot)
@@ -128,7 +133,7 @@ class Arena:
         elif "W" == direction:
             robot_location.x -= 2
 
-        if self.__valid_move_location(robot_location):
+        if self.__valid_move_location(robot, robot_location):
             self.robot_location_mapping[robot] = robot_location
         else:
             self.status = robot.name + " lose"
@@ -145,7 +150,7 @@ class Arena:
         elif "W" == direction:
             robot_location.x += 1
 
-        if self.__valid_move_location(robot_location):
+        if self.__valid_move_location(robot, robot_location):
             self.robot_location_mapping[robot] = robot_location
         else:
             self.status = robot.name + " lose"
@@ -172,12 +177,29 @@ class Arena:
             copy_robot_location.y == other_robot_location.y
         )
 
-    def __valid_move_location(self, location):
+    def __valid_move_location(self, moving_robot, location):
         (width, height) = self.field.get_dimension()
-        return (
+        within_field = (
             location.x >= 0 and location.y >= 0
             and location.x < width and location.y < height
         )
+
+        if not within_field:
+            return False
+
+        other_robot = next(
+            robot for robot in self.robots if robot != moving_robot
+        )
+        other_robot_coordinate = self.robot_location_mapping[other_robot]
+
+        field_not_obstructed = not self.field.is_obstructed(location)
+        not_obstructed_by_another_robot = not (
+            location.x == other_robot_coordinate.x and
+            location.y == other_robot_coordinate.y
+
+        )
+
+        return field_not_obstructed and not_obstructed_by_another_robot
 
     def __robot_can_pushed_from(self, pusher_location, robot):
         robot_defend_to_location = self.robot_defend_mapping[robot]
@@ -196,4 +218,5 @@ class Arena:
         self.penalty_mapping[robot] = False
 
     def __penalty(self, robot):
+        print("penalized")
         self.penalty_mapping[robot] = True

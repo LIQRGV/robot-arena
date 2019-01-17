@@ -1,6 +1,8 @@
 class Field:
+    OBSCTRUCTED_CODE = 1
+    NOT_OBSCTRUCTED_CODE = 0
     def __init__(self):
-        self.layout = [
+        self.__layout = [
             [0,0,0,0,0],
             [0,0,0,0,0],
             [0,0,0,0,0],
@@ -9,4 +11,10 @@ class Field:
         ]
 
     def get_dimension(self):
-        return (len(self.layout), len(self.layout[0]))
+        return (len(self.__layout), len(self.__layout[0]))
+
+    def get_layout(self):
+        return self.__layout
+
+    def is_obstructed(self, location):
+        return self.__layout[location.x][location.y] == self.OBSCTRUCTED_CODE
