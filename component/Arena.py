@@ -50,9 +50,9 @@ class Arena:
         )
         if "move" == action.action_type:
             self.__move(playing_robot, action.direction)
-        if "push" == action.action_type:
+        elif "push" == action.action_type:
             self.__push(playing_robot, action.direction)
-        if "defend" == action.action_type:
+        elif "defend" == action.action_type:
             self.__defend(playing_robot, action.direction)
         else:
             self.__penalty(playing_robot)
@@ -235,7 +235,7 @@ class Arena:
         self.penalty_mapping[robot] = False
 
     def __penalty(self, robot):
-        print("penalized")
+        print("{} penalized".format(robot.name))
         self.penalty_mapping[robot] = True
 
     def __init_image(self):
