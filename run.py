@@ -2,7 +2,7 @@ from component import (
     Arena,
     Coordinate,
     Field,
-    Robot,
+    RobotRandom as Robot,
 )
 
 field = Field()

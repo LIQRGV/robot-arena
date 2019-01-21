@@ -1,4 +1,4 @@
-from .Coordinate import Coordinate
+from .coordinate import Coordinate
 import pygame
 
 class Arena:
