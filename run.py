@@ -1,4 +1,4 @@
-from component import (
+from robotarena import (
     Arena,
     Coordinate,
     Field,

@@ -1,3 +1,5 @@
+from ..action import Action
+
 class RobotBase:
     def __init__(self, name):
         self.name = name

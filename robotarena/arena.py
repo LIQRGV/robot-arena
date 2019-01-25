@@ -6,7 +6,7 @@ class Arena:
     __FONT_SIZE = 0
     def __init__(self, field, red_side, red_side_location, blue_side, blue_side_location):
         self.field = field
-        self.robots = [red_side, blue_side]
+        self.__robots = [red_side, blue_side]
         self.robot_location_mapping = {
             red_side: red_side_location,
             blue_side: blue_side_location
@@ -16,7 +16,7 @@ class Arena:
             blue_side: None
         }
 
-        self.penalty_mapping = {
+        self.__penalty_mapping = {
             red_side: False,
             blue_side: False,
         }
@@ -37,7 +37,7 @@ class Arena:
             return
 
         other_robot = next(
-            robot for robot in self.robots if robot != playing_robot
+            robot for robot in self.__robots if robot != playing_robot
         )
         playing_robot_coordinate = self.robot_location_mapping[playing_robot]
         other_robot_coordinate = self.robot_location_mapping[other_robot]
@@ -58,7 +58,7 @@ class Arena:
             self.__penalty(playing_robot)
 
     def draw(self):
-        [red, blue] = self.robots
+        [red, blue] = self.__robots
         red_location = self.robot_location_mapping[red]
         blue_location = self.robot_location_mapping[blue]
         (width, height) = self.field.get_dimension()
@@ -111,7 +111,7 @@ class Arena:
     def __push(self, playing_robot, direction):
         robot_location = self.robot_location_mapping[playing_robot]
         other_robot = next(
-            robot for robot in self.robots if robot != playing_robot
+            robot for robot in self.__robots if robot != playing_robot
         )
         if self.__valid_push_location(playing_robot, direction):
             if self.__robot_can_pushed_from(robot_location, other_robot):
@@ -175,7 +175,7 @@ class Arena:
     def __valid_push_location(self, playing_robot, direction):
         robot_location = self.robot_location_mapping[playing_robot]
         other_robot = next(
-            robot for robot in self.robots if robot != playing_robot
+            robot for robot in self.__robots if robot != playing_robot
         )
         other_robot_location = self.robot_location_mapping[other_robot]
 
@@ -205,7 +205,7 @@ class Arena:
             return False
 
         other_robot = next(
-            robot for robot in self.robots if robot != moving_robot
+            robot for robot in self.__robots if robot != moving_robot
         )
         other_robot_coordinate = self.robot_location_mapping[other_robot]
 
@@ -229,14 +229,14 @@ class Arena:
         )
 
     def __is_on_penalty(self, robot):
-        return self.penalty_mapping[robot]
+        return self.__penalty_mapping[robot]
 
     def __free_from_penalty(self, robot):
-        self.penalty_mapping[robot] = False
+        self.__penalty_mapping[robot] = False
 
     def __penalty(self, robot):
         print("{} penalized".format(robot.name))
-        self.penalty_mapping[robot] = True
+        self.__penalty_mapping[robot] = True
 
     def __init_image(self):
         self.circle_black = pygame.image.load("images/circle_black.png")

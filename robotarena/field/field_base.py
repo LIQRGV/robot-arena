@@ -1,4 +1,4 @@
-class Field:
+class FieldBase:
     OBSCTRUCTED_CODE = 1
     NOT_OBSCTRUCTED_CODE = 0
     def __init__(self):
