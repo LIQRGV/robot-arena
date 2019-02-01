@@ -1,18 +1,20 @@
 from robotarena import (
     Arena,
     Coordinate,
-    Field,
+    FieldBase as Field,
     RobotRandom as Robot,
+    DisplayPygame as Display,
 )
 
 field = Field()
+display = Display(field)
 robot1_coordinate = Coordinate(0,0)
 robot2_coordinate = Coordinate(4,4)
 
 robot1 = Robot("robi")
 robot2 = Robot("robo")
 
-arena = Arena(field, robot1, robot1_coordinate, robot2, robot2_coordinate)
+arena = Arena(field, display, robot1, robot1_coordinate, robot2, robot2_coordinate)
 
 turn_count = 1
 
