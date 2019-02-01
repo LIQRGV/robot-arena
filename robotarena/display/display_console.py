@@ -4,10 +4,7 @@ class DisplayConsole:
 
     def draw(self, red_location, blue_location):
         field_and_player_matrix = self.__get_field_and_player_matrix(red_location, blue_location)
-        for row in field_and_player_matrix:
-            for cell in row:
-                print(cell, end=' ')
-            print()
+        print(self.__list_to_console_output(field_and_player_matrix))
 
     def __get_field_and_player_matrix(self, red_location, blue_location):
         (width, height) = self.field.get_dimension()
@@ -31,4 +28,14 @@ class DisplayConsole:
                     row.append(layout_mapping[layout_unit])
             matrix.append(row)
         return matrix
+
+    def __list_to_console_output(self, input_list):
+        return '\n'.join(
+            z for z in (
+                ' '.join(
+                    (str(y) for y in x)
+                )
+                for x in input_list
+            )
+        )
 
